@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Xodo 💚</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, #ffafbd, #ffc3a0);
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Girasoles distribuidos de forma aleatoria */
+        .contenedor {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .girasol {
+            font-size: 100px;
+            position: absolute;
+            animation: girar 4s infinite linear;
+        }
+
+        @keyframes girar {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Caja de la sorpresa */
+        .sorpresa {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 10px;
+            position: absolute;
+            z-index: 10;
+        }
+
+        button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: darkgreen;
+        }
+
+        /* Carta */
+        .carta {
+            display: none;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            position: absolute;
+            text-align: center;
+            max-width: 600px;
+            z-index: 10;
+            color: #fff;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .carta img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Girasoles -->
+    <div class="contenedor" id="contenedor"></div>
+
+    <!-- Sorpresa -->
+    <div class="sorpresa">
+        <h1>💚 Toca aquí para una sorpresa 💚</h1>
+        <button id="activar">Abrir</button>
+    </div>
+
+    <!-- Carta de amor -->
+    <div class="carta">
+        <img src="foto_grande.jpg" alt="Nosotros">
+        <h2>Hola, mi gorda 💚</h2>
+        <p>Me he tomado el tiempo de hacer esto, no solo como parte de mi aprendizaje en este nuevo lenguaje de programación, sino también como un pequeño reto personal para ver cuánto he avanzado en estos tres días. Pero, más allá de eso, se me ocurrió la maravillosa idea de aprovecharlo para expresarte todo lo que siento por ti.</p>
+        <p>Me tomé mi tiempo para crear esta página web con mucho amor, pensando en que cuando te sientas mal, triste, estresada o enferma, puedas entrar a ella y recordar que tienes a alguien que te ama, te apoya y lo hará por siempre. Quiero que esta página sea un recordatorio de lo especial que eres para mí desde que logramos establecer esta conexión tan bella. De pana, siento que mi vida tomó otro camino y se volvió muy especial desde que llegaste a ella.</p>
+        <p>Me siento afortunado de haber coincidido contigo, de haber escrito nuestra historia juntos y de seguir construyéndola día a día. Me gusta literalmente todo de ti, cada salida, cada gesto, cada risa. Sé que a veces puedo ser cansón, chocante o hasta fastidioso, pero todo lo hago con amor, porque para mí, no hay nadie como tú.</p>
+        <p>No he encontrado en nadie más lo que encontré en ti, y estoy casiiiii seguro de que así será siempre. Recuerda que eres mi todo, mi Xodo. 💚</p>
+        <p>Con mucho amor, la persona que más te ama y te amará 💚.</p>
+    </div>
+
+    <!-- Música -->
+    <audio id="cancion" loop>
+        <source src="https://www.dropbox.com/scl/fi/xkl37zt7jzlmrjmheffqw/J-sean-Log-Chachach-Lyric-Video-sDMxQF18yvA.mp3?rlkey=mmggrrcyh4q84aucq616c5sr2&dl=1" type="audio/mp3">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <script>
+        // Función para colocar girasoles en posiciones aleatorias
+        function crearGirasoles(cantidad) {
+            const contenedor = document.getElementById("contenedor");
+            const anchoPantalla = window.innerWidth;
+            const altoPantalla = window.innerHeight;
+            const espacios = [];
+
+            for (let i = 0; i < cantidad; i++) {
+                let x, y, valido;
+                do {
+                    x = Math.random() * (anchoPantalla - 100);
+                    y = Math.random() * (altoPantalla - 100);
+                    valido = true;
+
+                    for (let j = 0; j < espacios.length; j++) {
+                        let [ex, ey] = espacios[j];
+                        if (Math.abs(x - ex) < 150 && Math.abs(y - ey) < 150) {
+                            valido = false;
+                            break;
+                        }
+                    }
+                } while (!valido);
+
+                espacios.push([x, y]);
+
+                const girasol = document.createElement("div");
+                girasol.classList.add("girasol");
+                girasol.innerHTML = "🌻";
+                girasol.style.left = `${x}px`;
+                girasol.style.top = `${y}px`;
+                girasol.style.position = "absolute";
+                contenedor.appendChild(girasol);
+            }
+        }
+
+        // Genera 10 girasoles
+        crearGirasoles(10);
+
+        // Evento para mostrar la carta y la música
+        document.getElementById("activar").addEventListener("click", function() {
+            document.querySelector(".contenedor").style.display = "none";
+            document.querySelector(".sorpresa").style.display = "none";
+            document.querySelector(".carta").style.display = "block";
+            document.querySelector("audio").play();
+        });
+    </script>
+
+</body>
+</html>
+
